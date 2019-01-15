@@ -4,25 +4,20 @@ import java.util.regex.Pattern;
 
 public class Aufgabe3 {
     public static void main(String[]args){
-
+        String email = JOptionPane.showInputDialog("Give email");
         try {
-            if (testEmail()) {
-                System.out.println("Valid");
-            } else {
-                System.out.println("Trash");
-            }
-        } catch (Exception e) {
+            testEmail(email);
+        } catch (WrongEmailException e) {
             e.printStackTrace();
         }
     }
 
 
-    private static boolean testEmail() throws Exception {
-        String email = JOptionPane.showInputDialog("Give email");
+    private static void testEmail(String email) throws WrongEmailException{
 
         Pattern pattern = Pattern.compile("[\\w|-]+@\\w[\\w|-]*\\.[a-z]{2,3}");
         Matcher m = pattern.matcher(email);
 
-        return m.find();
+        if (!m.find()) throw new WrongEmailException(); //! logisches nicht eigene exception wird gethrowt
     }
 }
